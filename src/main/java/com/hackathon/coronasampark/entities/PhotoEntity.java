@@ -14,6 +14,7 @@ public class PhotoEntity {
     private String cloumn3;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "photo_key", nullable = false)
     public Integer getPhotoKey() {
         return photoKey;

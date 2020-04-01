@@ -19,6 +19,7 @@ public class ContactEntity {
     private String cloumn3;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id", nullable = false)
     public Integer getPersonId() {
         return personId;

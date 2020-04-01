@@ -18,6 +18,7 @@ public class AddressEntity {
     private String cloumn3;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_key", nullable = false)
     public Integer getAddressKey() {
         return addressKey;

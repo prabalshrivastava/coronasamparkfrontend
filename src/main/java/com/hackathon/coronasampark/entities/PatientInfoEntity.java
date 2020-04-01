@@ -1,15 +1,13 @@
 package com.hackathon.coronasampark.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "patient_info", schema = "CoronaSampark", catalog = "postgres")
 public class PatientInfoEntity {
+    @Id
     private Integer personId;
     private String criticalityIndication;
     private String treatmentStatus;

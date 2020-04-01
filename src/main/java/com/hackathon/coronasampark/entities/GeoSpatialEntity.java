@@ -1,9 +1,6 @@
 package com.hackathon.coronasampark.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +12,8 @@ public class GeoSpatialEntity {
     private String cloumn3;
 
     @Basic
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_key", nullable = false)
     public Integer getAddressKey() {
         return addressKey;
