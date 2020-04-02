@@ -1,202 +1,75 @@
 package com.hackathon.coronasampark.entities;
+import io.swagger.annotations.ApiModelProperty;
+
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Objects;
 
+@Data
 @Entity
-@Table(name = "people", schema = "CoronaSampark", catalog = "postgres")
-public class PeopleEntity {
-    private Integer personId;
+@Table(name = "people")
+public class PeopleEntity extends AuditModel{
+    @ApiModelProperty(required = true, example = "photoKey")
+    @Column(nullable = false)
     private Integer photoKey;
+
+    @ApiModelProperty(required = true, example = "name")
+    @Column(nullable = false, length = 250)
     private String name;
+
+    @ApiModelProperty(required = true, example = "age")
+    @Column(nullable = false)
     private Integer age;
+
+    @ApiModelProperty(required = true, example = "sex")
+    @Column(nullable = false, length = 10)
     private String sex;
+
+    @ApiModelProperty(required = true, example = "status")
+    @Column(nullable = false, length = 25)
     private String status;
+
+    @ApiModelProperty(required = true, example = "contactNumber")
+    @Column(nullable = true)
     private Integer contactNumber;
+
+    @ApiModelProperty(required = true, example = "emailId")
+    @Column(nullable = true, length = 150)
     private String emailId;
+
+    @ApiModelProperty(required = true, example = "fbLink")
+    @Column(nullable = true, length = 500)
     private String fbLink;
+
+    @ApiModelProperty(required = true, example = "twitterLink")
+    @Column(nullable = true, length = 500)
     private String twitterLink;
+
+    @ApiModelProperty(required = true, example = "instagarmLink")
+    @Column(nullable = true, length = 500)
     private String instagarmLink;
+
+    @ApiModelProperty(required = true, example = "otherLink")
+    @Column(nullable = true, length = 500)
     private String otherLink;
+
+    @ApiModelProperty(required = true, example = "cloumn1")
+    @Column(nullable = false, length = 250)
     private String cloumn1;
+
+    @ApiModelProperty(required = true, example = "cloumn2")
+    @Column(nullable = false, length = 250)
     private String cloumn2;
+
+    @ApiModelProperty(required = true, example = "cloumn3")
+    @Column(nullable = false, length = 250)
     private String cloumn3;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "person_id", nullable = false)
-    public Integer getPersonId() {
-        return personId;
-    }
+    @ApiModelProperty(required = true, example = "location")
+    @Column(nullable = false, length = 250)
+    private String location;
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-    @Basic
-    @Column(name = "photo_key", nullable = false)
-    public Integer getPhotoKey() {
-        return photoKey;
-    }
-
-    public void setPhotoKey(Integer photoKey) {
-        this.photoKey = photoKey;
-    }
-
-    @Basic
-    @Column(name = "name", nullable = false, length = 250)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
-    @Column(name = "age", nullable = false)
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Basic
-    @Column(name = "sex", nullable = false, length = 10)
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    @Basic
-    @Column(name = "status", nullable = false, length = 25)
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Basic
-    @Column(name = "contact_number", nullable = true)
-    public Integer getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(Integer contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    @Basic
-    @Column(name = "email_id", nullable = true, length = 150)
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
-
-    @Basic
-    @Column(name = "fb_link", nullable = true, length = 500)
-    public String getFbLink() {
-        return fbLink;
-    }
-
-    public void setFbLink(String fbLink) {
-        this.fbLink = fbLink;
-    }
-
-    @Basic
-    @Column(name = "twitter_link", nullable = true, length = 500)
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    @Basic
-    @Column(name = "instagarm_link", nullable = true, length = 500)
-    public String getInstagarmLink() {
-        return instagarmLink;
-    }
-
-    public void setInstagarmLink(String instagarmLink) {
-        this.instagarmLink = instagarmLink;
-    }
-
-    @Basic
-    @Column(name = "other_link", nullable = true, length = 500)
-    public String getOtherLink() {
-        return otherLink;
-    }
-
-    public void setOtherLink(String otherLink) {
-        this.otherLink = otherLink;
-    }
-
-    @Basic
-    @Column(name = "cloumn1", nullable = false, length = 250)
-    public String getCloumn1() {
-        return cloumn1;
-    }
-
-    public void setCloumn1(String cloumn1) {
-        this.cloumn1 = cloumn1;
-    }
-
-    @Basic
-    @Column(name = "cloumn2", nullable = false, length = 250)
-    public String getCloumn2() {
-        return cloumn2;
-    }
-
-    public void setCloumn2(String cloumn2) {
-        this.cloumn2 = cloumn2;
-    }
-
-    @Basic
-    @Column(name = "cloumn3", nullable = false, length = 250)
-    public String getCloumn3() {
-        return cloumn3;
-    }
-
-    public void setCloumn3(String cloumn3) {
-        this.cloumn3 = cloumn3;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PeopleEntity that = (PeopleEntity) o;
-        return Objects.equals(personId, that.personId) &&
-                Objects.equals(photoKey, that.photoKey) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(age, that.age) &&
-                Objects.equals(sex, that.sex) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(contactNumber, that.contactNumber) &&
-                Objects.equals(emailId, that.emailId) &&
-                Objects.equals(fbLink, that.fbLink) &&
-                Objects.equals(twitterLink, that.twitterLink) &&
-                Objects.equals(instagarmLink, that.instagarmLink) &&
-                Objects.equals(otherLink, that.otherLink) &&
-                Objects.equals(cloumn1, that.cloumn1) &&
-                Objects.equals(cloumn2, that.cloumn2) &&
-                Objects.equals(cloumn3, that.cloumn3);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(personId, photoKey, name, age, sex, status, contactNumber, emailId, fbLink, twitterLink, instagarmLink, otherLink, cloumn1, cloumn2, cloumn3);
-    }
+    @ApiModelProperty(required = true, example = "format")
+    @Column(nullable = false, length = 250)
+    private String format;
 }
