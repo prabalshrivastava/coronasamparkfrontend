@@ -28,6 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
     MultiValueMap headers = null;
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-    return error(exception, headers, status);
+    ResponseEntity<?> error = error(exception, headers, status);
+    return error;
   }
 }
