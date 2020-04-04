@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Corona Sampark - Home</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://unpkg.com/vue-router"></script>
+	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+	
+	
+	<link href="style.css" rel="stylesheet" />
+	
+</head>
+<body>
+
+<div id="app1">
+	<div class="bs-example">
+		<!--#region  navbar-->
+		  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			  <a href="#" class="navbar-brand">
+				  <img src="images/corona.jpg" height="30" alt="Logo" class="img img-circle">
+				  <a href="javascript:void(0)" class="navbar-brand">Corona Sampark</a>
+			  </a>
+			  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+				  <span class="navbar-toggler-icon"></span>
+			  </button>
+  
+			  <div class="collapse navbar-collapse" id="navbarCollapse">
+				  <div class="navbar-nav">
+					<a href="index.html" class="nav-item nav-link">Home</a>
+					<a href="https://covid.apollo247.com/?utm_source=linkedin&utm_medium=organic&utm_campaign=bot_scanner" class="nav-item nav-link">Self Test</a> 
+					<a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf" class="nav-item nav-link">Emergency Helpline Numbers</a>
+					<a href="#" class="nav-item nav-link">Shops Near Me</a> 
+				  </div>
+				  <div class="navbar-nav ml-auto">
+					  <a href="#" class="nav-item nav-link">Login</a>
+					  <a href="#" class="nav-item nav-link">Register</a>
+				  </div>
+			  </div>
+		  </nav>
+		  <!--#endregion-->
+		<!--#region statistics_india_telangana_hyderabad-->
+		  <div class="row">
+			  <div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+				<div class="row col-lg-12">
+					  <div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+						<div class="card">
+						  <div class="card-body">
+							<img class="" src="images/confirmed.jpg" alt="Card image">
+							<div class="pull-right" >
+							  <div ><b style="color:red">CONFIRMED</b></div> 
+							  <div class="pull-right"><h4>
+								  <span id="cases_confirmed" class= "badge badge-secondary">
+								  {{indiaCases.confirmed}}
+								  </span>
+							  </h4></div>
+							  </div>
+						  </div>
+						</div>
+					  </div>
+					  <div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+						  <div class="card">
+							<div class="card-body">
+							  <img class="pull-left" src="images/active.jpg" alt="Card image">
+							  <div class="pull-right" >
+								<div ><b style="color:blueviolet">ACTIVE</b></div> 
+								<div class="pull-right"><h4>
+									<span id="cases_active" class= "badge badge-secondary">
+										{{indiaCases.active}}
+									</span>
+								</h4></div>
+								</div>
+							</div>
+						  </div>
+						</div>
+				  </div>
+				  <div class="row col-lg-12">
+						<div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+						  <div class="card">
+							<div class="card-body">
+							  <img class="pull-left" src="images/recovered.jpg" alt="Card image">
+							  <div class="pull-right" >
+								<div ><b style="color:green">RECOVERED</b></div> 
+								<div class="pull-right"><h4>
+									<span id="cases_recovered" class= "badge badge-secondary" id="count_recovered">
+										{{indiaCases.recovered}}
+									</span>
+								</h4></div>
+								</div>
+							</div>
+						  </div>
+						</div>
+						<div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+						  <div class="card">
+							<div class="card-body">
+							  <img class="pull-left" src="images/deceased.jpg" alt="Card image">
+							  <div class="pull-right" >
+								<div ><b style="color:cadetblue">DECEASED</b></div> 
+								<div class="pull-right"><h4>
+									<span id="cases_deceased" class= "badge badge-secondary">
+										{{indiaCases.deaths}}
+									</span>
+								</h4></div>
+								</div>
+							</div>
+						  </div>
+						</div>
+					</div>      
+			  </div>
+			  <div class="col-sm-6 col-lg-6 col-xs-12 col-md-12">
+				<div class="row">
+				  <div class="col-lg-6">
+					<div class="card card-body">
+					  <div ><b id="" style="color:indigo">TELANGANA</b></div> 
+					  <br/>
+					  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+						Total Cases<code id="telangana_confirmed">{{telanganaCases.confirmed}}</code>
+						<div class="progress">
+						  <div  class="progress-bar progress-bar-striped bg-danger"  role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Active:<code id="telangana_active">{{telanganaCases.active}}</code>
+						<div class="progress">
+						  <div id= "tprogress_active" class="progress-bar progress-bar-striped bg-info" v-bind:style="{'width': telanganaCases.progressActive}" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Recovered:<code id="telangana_recovered">{{telanganaCases.recovered}}</code>
+						<div class="progress">
+						  <div id= "tprogress_recovered" class="progress-bar progress-bar-striped bg-success" v-bind:style="{'width': telanganaCases.progressRecovered}"  role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Deceased:<code id="telangana_deceased">{{telanganaCases.deaths}}</code>
+						<div class="progress">
+						  <div id= "tprogress_deceased" class="progress-bar progress-bar-striped bg-warning" v-bind:style="{'width': telanganaCases.progressDeaths}"  role="progressbar"  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						
+					  </div>              
+					</div>
+				  </div>
+				  <div class="col-lg-6">
+					<div class="card card-body">
+					  <div ><b id="" style="color:indigo">HYDERABAD</b></div> 
+					  <br/>
+					  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+						Total Cases<code id="hyderabad_confirmed">{{hyderabadCases.confirmed}}</code>
+						<div class="progress">
+						  <div  class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Active:<code id="hyderabad_active">{{hyderabadCases.active}}</code>
+						<div class="progress">
+						  <div id= "hprogress_active" class="progress-bar progress-bar-striped bg-info" v-bind:style="{'width': hyderabadCases.progressActive}" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Recovered:<code id="hyderabad_recovered">{{hyderabadCases.recovered}}</code>
+						<div class="progress">
+						  <div id= "hprogress_recovered" class="progress-bar progress-bar-striped bg-success" v-bind:style="{'width': hyderabadCases.progressRecovered}" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						Deceased:<code id="hyderabad_deceased">{{hyderabadCases.deaths}}</code>
+						<div class="progress">
+						  <div id= "hprogress_deceased" class="progress-bar progress-bar-striped bg-warning" v-bind:style="{'width': hyderabadCases.progressDeaths}" role="progressbar"  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+		  </div>
+		  <!--#endregion-->
+	  </div>
+		
+	  <div>
+		<!--#region Map_with_state_count_patients-->  
+		<div  class="container-fluid">
+		  <hr/>
+		  <label><b>View By State</b></label>
+		  <!--#region State_list-->
+		  <p>
+			<a v-for="state in lstStates" class="btn btn-outline-secondary btn-sm"  role="button" 
+			   v-on:click="loadStateDetails(state)" aria-expanded="false" >{{state}}</a>
+		  </p>
+		  <!--#endregion-->
+		  <!--#region State_collapse-->
+		  <div class="row">
+			<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+			  <div class="collapse multi-collapse" id="CollapseState">
+				<div class="card card-body">
+					<div class="row">
+					  <!--#region State_Map_Image-->
+						<div class="col-lg-4 col-sm-12 col-md-4 col-xs-12 text-center" >
+							<img id="img_state"  alt="StateMap" v-bind:src="stateInfo.imgSrc" data-toggle="tooltip"
+							title="Red Zone represents current State">
+						</div>
+					  <!--#endregion-->
+					  <!--#region State_counts-->
+						<div class="col-lg-4 col-sm-12 col-md-4 col-xs-12">
+							  
+								  <div ><b id="StateName" style="color:indigo">{{stateInfo.name}}</b></div> 
+								  <br/>
+								  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+									Total Cases<code id="state_confirmed">{{stateInfo.confirmed}}</code>
+									<div class="progress">
+									  <div  class="progress-bar progress-bar-striped bg-danger"  role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									Active:<code id="state_active">{{stateInfo.active}}</code>
+									<div class="progress">
+									  <div id= "progress_active" class="progress-bar progress-bar-striped bg-info" v-bind:style="{'width': stateInfo.progressActive}" role="progressbar" v-bind:style="{'width': stateInfo.progressActive}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									Recovered:<code id="state_recovered">{{stateInfo.recovered}}</code>
+									<div class="progress">
+									  <div id= "progress_recovered" class="progress-bar progress-bar-striped bg-success" v-bind:style="{'width': stateInfo.progressRecovered}" role="progressbar" v-bind:style="{'width': stateInfo.progressRecovered}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									Deceased:<code id="state_deceased">{{stateInfo.deaths}}</code>
+									<div class="progress">
+									  <div id= "progress_deceased" class="progress-bar progress-bar-striped bg-warning" v-bind:style="{'width': stateInfo.progressDeaths}" role="progressbar" v-bind:style="{'width': stateInfo.progressDeaths}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<br/>
+									<a href="#" class="btn btn-info btn-sm" v-on:click="showPatientsInState(stateInfo.name)">View More</a>
+								  </div>
+  
+						</div>
+					  <!--#endregion-->
+					  <!--#region Patient_Carousel--> 
+					  <div class="col-lg-4 col-sm-12 col-md-4 col-xs-12 text-center">
+						  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+							  <div class="carousel-item active">
+								<!-- <img class="d-block w-100" src="..." alt="First slide"> -->
+								<div class="card border-danger" style="width: 18rem;">                                                  
+								  <div class="col-lg-12 card-body">
+									<div class="col-lg-12">
+										<img class="img-responsive" src="images/Patients/boy.jpg" alt="Card image cap"></div>
+									<h5 class="card-title">Harry</h5>
+									<ul class="list-group list-group-flush">
+									  <li class="list-group-item">COVID-19 +</li>
+									  <li class="list-group-item">Criticality : Medium</li>
+									  <li class="list-group-item">Treated At: JJ Hospital</li>
+									</ul>
+								  </div>
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<!-- <img class="d-block w-100" src="..." alt="Second slide"> -->
+								<div class="card  border-warning" style="width: 18rem;">                                                  
+								  <div class="col-lg-12 card-body">
+									<div class="col-lg-12"><img class="img-responsive" src="images/Patients/girl.jpg" alt="Card image cap"></div>
+									<h5 class="card-title">Rose</h5>
+									<ul class="list-group list-group-flush">
+									  <li class="list-group-item">Suspected</li>
+									  <li class="list-group-item">Symptoms: Fever, Cough</li>
+									  <li class="list-group-item">Quarantined: Yes</li>
+									</ul>
+								  </div>
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<!-- <img class="d-block w-100" src="..." alt="Third slide"> -->
+								<div class="card  border-warning" style="width: 18rem;">                                                  
+								  <div class="col-lg-12 card-body">
+									<div class="col-lg-12"><img class="img-responsive" src="images/Patients/oldman.jpg" alt="Card image cap"></div>
+									<h5 class="card-title">Hohn</h5>
+									<ul class="list-group list-group-flush">
+									  <li class="list-group-item">Suspected</li>
+									  <li class="list-group-item">Symptoms : No</li>
+									  <li class="list-group-item">Quarantined : Yes</li>
+									</ul>
+								  </div>
+								</div>
+							  </div>
+							</div>
+							<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <span class="sr-only">Next</span>
+							</a>
+						  </div>
+					  </div>
+					  <!--#endregion-->
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!--#endregion-->
+		</div>
+		<!--#endregion-->
+	  </div>
+	 
+</div>
+
+<!-- Vue Instance -->
+<script>
+
+
+var app = new Vue({
+	el: '#app1',
+	data:{
+		lstStates:{},
+		cases_state_district:[],
+		stats_statewise:[],
+		stats_districtwise:[],
+		
+		indiaCases:{
+			confirmed:0,
+			active:0,
+			recovered:0,
+			deaths:0
+		},
+		telanganaCases:{
+			confirmed:0,
+			active:0,
+			recovered:0,
+			deaths:0,
+			progressActive:'',
+			progressRecovered:'',
+			progressDeaths:'',
+		},
+		hyderabadCases:{
+			confirmed:0,
+			active:0,
+			recovered:0,
+			deaths:0,
+			progressActive:'',
+			progressRecovered:'',
+			progressDeaths:'',
+		},
+		stateInfo:{
+			name:'',
+			confirmed:0,
+			active:0,
+			recovered:0,
+			deaths:0,
+			imgSrc:'images/States/',
+			progressActive:'',
+			progressRecovered:'',
+			progressDeaths:'',
+		}
+	},
+	methods:{
+		showPatientsInState(state){
+			var self=this;
+			//Go to view_patients.html to show patients in the selected state
+			window.location.href='view_patients.html?state='+state.toLowerCase();
+		},
+
+		loadStateDetails(state){
+			console.log(state);
+			var self=this;
+			
+			self.stateInfo=$.grep(self.stats_statewise.statewise,function(obj){return obj.state==state})[0];
+			self.stateInfo.name=state.toUpperCase();
+
+			console.log(self.stateInfo);
+			self.stateInfo.imgSrc="images/States/"+state+".jpg";
+			self.stateInfo.progressActive=(self.stateInfo.active/self.stateInfo.confirmed)*100+'%';
+			self.stateInfo.progressRecovered=(self.stateInfo.recovered/self.stateInfo.confirmed)*100+'%';
+			self.stateInfo.progressDeaths=(self.stateInfo.deaths/self.stateInfo.confirmed)*100+'%';
+
+			$('#CollapseState').show();
+		},
+
+		getHyderabadCases(){
+			var self=this;
+			//get district stats
+			//https://api.covid19india.org/state_district_wise.json
+			var request_districtwise = new XMLHttpRequest();
+			request_districtwise.open('GET', 'https://api.covid19india.org/state_district_wise.json', true);
+			request_districtwise.onload = function() {
+			// Begin accessing JSON data here
+			var data = JSON.parse(this.response)
+			self.lstStates=Object.keys(data).sort();
+			//console.log(self.lstStates);
+			if (request_districtwise.status >= 200 && request_districtwise.status < 400) {
+				self.stats_districtwise=data; 
+				console.log(self.stats_districtwise);
+				var hydObj=self.stats_districtwise["Telangana"].districtData.Hyderabad;//$.grep(district_statewise.statewise,function(obj){return obj.state=="Telangana"})[0];
+				self.hyderabadCases.confirmed=hydObj.confirmed;
+
+				self.hyderabadCases.confirmed=hydObj.confirmed==undefined?0:hydObj.confirmed;
+				self.hyderabadCases.active=hydObj.active==undefined?0:hydObj.active;
+				self.hyderabadCases.recovered=hydObj.recovered==undefined?0:hydObj.recovered;
+				self.hyderabadCases.deaths=hydObj.deaths==undefined?0:hydObj.deaths;
+
+				self.hyderabadCases.progressActive=(self.hyderabadCases.active/self.hyderabadCases.confirmed)*100+'%';
+				self.hyderabadCases.progressRecovered=(self.hyderabadCases.recovered/self.hyderabadCases.confirmed)*100+'%';
+				self.hyderabadCases.progressDeaths=(self.hyderabadCases.deaths/self.hyderabadCases.confirmed)*100+'%';
+
+				console.log(self.hyderabadCases);
+				
+			} else {
+				console.log('request_districtwise error')
+			}
+			}
+
+			request_districtwise.send();
+		},
+
+		getAllStateCases(){
+			var self=this;
+			//get statewise stats
+			//https://api.covid19india.org/data.json
+			var request_statewise = new XMLHttpRequest();
+			request_statewise.open('GET', 'https://api.covid19india.org/data.json', true)
+			request_statewise.onload = function() {
+				// Begin accessing JSON data here
+					var data = JSON.parse(this.response)
+					
+					if (request_statewise.status >= 200 && request_statewise.status < 400) {
+						self.stats_statewise=data;
+						self.indiaCases=$.grep(self.stats_statewise.statewise,function(obj){return obj.state=="Total"})[0];
+						self.telanganaCases=$.grep(self.stats_statewise.statewise,function(obj){return obj.state=="Telangana"})[0];
+						self.telanganaCases.progressActive=(self.telanganaCases.active/self.telanganaCases.confirmed)*100+'%';
+						self.telanganaCases.progressRecovered=(self.telanganaCases.recovered/self.telanganaCases.confirmed)*100+'%';
+						self.telanganaCases.progressDeaths=(self.telanganaCases.deaths/self.telanganaCases.confirmed)*100+'%';
+
+						self.getHyderabadCases();
+						self.loadStateDetails('Telangana');
+						console.log(self.indiaCases);
+					} else {
+						console.log('request_statewise error')
+					}
+			}
+			request_statewise.send();
+			}
+		},
+	mounted:function(){
+		var self=this;
+		self.getAllStateCases();
+	}  
+})
+</script>
+
+</body>
+</html>

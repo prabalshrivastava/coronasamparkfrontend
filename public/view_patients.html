@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Corona Sampark - View Patients</title>
+      
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/vue-router"></script>
+        <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="sty   lesheet" />
+            
+        <link href="style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="app">
+            <div class="bs-example">
+                <!--#region  navbar-->
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                    <a href="#" class="navbar-brand">
+                        <img src="images/corona.jpg" height="30" alt="Logo" class="img img-circle">
+                        <a href="javascript:void(0)" class="navbar-brand">Corona Sampark</a>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="https://covid.apollo247.com/?utm_source=linkedin&utm_medium=organic&utm_campaign=bot_scanner" class="nav-item nav-link">Self Test</a> 
+                            <a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf" class="nav-item nav-link">Emergency Helpline Numbers</a>
+                            <a href="#" class="nav-item nav-link">Shops Near Me</a> 
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <a href="#" class="nav-item nav-link">Login</a>
+                            <a href="#" class="nav-item nav-link">Register</a>
+                        </div>
+                    </div>
+                </nav>
+                <!--#endregion-->
+            </div>
+            <div style="margin: 10px 10px 10px 10px">
+            <!--#region Patients_list-->
+            <div  class="container-fluid">
+                <b>List of patients and suspected people:</b>
+                <div class="row">
+                    <div v-for="patient in lstPatients" 
+                     v-bind:class="{
+                                    'card border-danger mb-3':patient.category=='Patient',
+                                    'card border-info mb-3':patient.category=='Contact'
+                                    }" style="max-width: 8rem;">
+                    <div class="card-body text-center">
+                        <img v-if="patient.gender=='Male' && patient.age<=14" :src='imgSrc.imgM14'/>
+                        <img v-if="patient.gender=='Male' && patient.age>14 && patient.age<=30" :src='imgSrc.imgM30'/>
+                        <img v-if="patient.gender=='Male' && patient.age>30" :src='imgSrc.imgM50'/>
+                        
+                        <img v-if="patient.gender=='Female' && patient.age<=14" :src='imgSrc.imgF14'/>
+                        <img v-if="patient.gender=='Female' && patient.age>14 && patient.age<=30" :src='imgSrc.imgF30'/>
+                        <img v-if="patient.gender=='Female' && patient.age>30  && patient.age<=50" :src='imgSrc.imgF50'/>
+                        <img v-if="patient.gender=='Female' && patient.age>50" :src='imgSrc.imgF60'/>
+                        
+                      </div>
+                    <div v-bind:class="{
+                        'card-footer bg-transparent border-danger text-danger':patient.category=='Patient',
+                        'card-footer bg-transparent border-info text-info':patient.category=='Contact'
+                        }" style="max-width: 10rem;">
+                       <b> {{patient.name}}</b>
+                       <div class="pull-right">
+                           <a href="#">
+                                <i class="fa fa-eye" title="View details" v-on:click="viewPatientDetails(patient.id)"></i>
+                           </a>
+                           <a href="#">
+                                <i class="fa fa-tag" title="Tag yourself to this person" v-on:click="tagYourself(patient.id)"></i>
+                           </a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!--#endregion Patients_list-->
+            <!--#region Patient_Info_and_Chain-->
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="patientModal" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <img v-if="patientInfo.gender=='Male' && patientInfo.age<=14" :src='imgSrc.imgM14'/>
+                        <img v-if="patientInfo.gender=='Male' && patientInfo.age>14 && patientInfo.age<=30" :src='imgSrc.imgM30'/>
+                        <img v-if="patientInfo.gender=='Male' && patientInfo.age>30  " :src='imgSrc.imgM50'/>
+                        
+                        <img v-if="patientInfo.gender=='Female' && patientInfo.age<=14" :src='imgSrc.imgF14'/>
+                        <img v-if="patientInfo.gender=='Female' && patientInfo.age>14 && patientInfo.age<=30" :src='imgSrc.imgF30'/>
+                        <img v-if="patientInfo.gender=='Female' && patientInfo.age>30  && patientInfo.age<=50" :src='imgSrc.imgF50'/>
+                        <img v-if="patientInfo.gender=='Female' && patientInfo.age>50" :src='imgSrc.imgF60'/>
+                          
+                        &nbsp;
+                        <h5 class="modal-title" style="margin-top:9px">{{patientInfo.name}}</h5>
+                        <span style="margin-left:7px;margin-top:15px" v-if="patientInfo.category=='Patient'" class="badge badge-danger" title="Tested COVID +ve">&nbsp;&nbsp;</span>
+                        <span style="margin-left:7px;margin-top:15px" v-if="patientInfo.category=='Contact'" class="badge badge-warning" title="MIght have been infected">&nbsp;&nbsp;</span>
+                        
+                        <a href="#"  style="margin-left:7px;margin-top:12px">
+                            <i class="fa fa-tag" title="Tag yourself to this person" v-on:click="tagYourself(patientInfo.id)"></i>
+                       </a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <ul class="list-group list-group-flush ">
+                                <li class="list-group-item">
+                                    <b>Age:</b>{{patientInfo.age}}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Gender:</b>{{patientInfo.gender}}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Symptoms:</b>{{patientInfo.symptoms}}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Quarantined Since</b>&nbsp;{{patientInfo.quarantinedSince}}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Address:</b>
+                                    {{patientInfo.taluka}},
+                                    {{patientInfo.district}},
+                                    {{patientInfo.state}}
+                                </li>
+                              </ul>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                           
+                            
+                            <!--sample tree-->
+                            <div class="tree">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)"  v-bind:title="patientInfo.name">
+                                            <div>
+                                                <img v-if="patientInfo.gender=='Male' && patientInfo.age<=14" :src='imgSrc.imgM14'/>
+                                                <img v-if="patientInfo.gender=='Male' && patientInfo.age>14 && patientInfo.age<=30" :src='imgSrc.imgM30'/>
+                                                <img v-if="patientInfo.gender=='Male' && patientInfo.age>30  " :src='imgSrc.imgM50'/>
+                                                
+                                                <img v-if="patientInfo.gender=='Female' && patientInfo.age<=14" :src='imgSrc.imgF14'/>
+                                                <img v-if="patientInfo.gender=='Female' && patientInfo.age>14 && patientInfo.age<=30" :src='imgSrc.imgF30'/>
+                                                <img v-if="patientInfo.gender=='Female' && patientInfo.age>30  && patientInfo.age<=50" :src='imgSrc.imgF50'/>
+                                                <img v-if="patientInfo.gender=='Female' && patientInfo.age>50" :src='imgSrc.imgF60'/>
+                                            </div>
+                                        </a>
+                                        <ul  v-if="patientInfo.name.length>0">
+                                            <li v-for="p in getChain(patientInfo.degree,patientInfo.id)">
+                                                <a href="javascript:void(0)" v-bind:title="p.name">
+                                                    <div>
+                                                        <img v-if="p.gender=='Male' && p.age<=14" :src='imgSrc.imgM14'/>
+                                                        <img v-if="p.gender=='Male' && p.age>14 && p.age<=30" :src='imgSrc.imgM30'/>
+                                                        <img v-if="p.gender=='Male' && p.age>30  " :src='imgSrc.imgM50'/>
+                                                        
+                                                        <img v-if="p.gender=='Female' && p.age<=14" :src='imgSrc.imgF14'/>
+                                                        <img v-if="p.gender=='Female' && p.age>14 && p.age<=30" :src='imgSrc.imgF30'/>
+                                                        <img v-if="p.gender=='Female' && p.age>30  && p.age<=50" :src='imgSrc.imgF50'/>
+                                                        <img v-if="p.gender=='Female' && p.age>50" :src='imgSrc.imgF60'/>
+                                                    </div>
+                                                </a>
+                                                <ul  v-if="p.name.length>0">
+                                                    <li v-for="q in getChain(p.degree,p.id)">
+                                                        <a href="javascript:void(0)" v-bind:title="q.name"> 
+                                                            <div>
+                                                            <img v-if="q.gender=='Male' && q.age<=14" :src='imgSrc.imgM14'/>
+                                                            <img v-if="q.gender=='Male' && q.age>14 && q.age<=30" :src='imgSrc.imgM30'/>
+                                                            <img v-if="q.gender=='Male' && q.age>30 " :src='imgSrc.imgM50'/>
+                                                            
+                                                            <img v-if="q.gender=='Female' && q.age<=14" :src='imgSrc.imgF14'/>
+                                                            <img v-if="q.gender=='Female' && q.age>14 && q.age<=30" :src='imgSrc.imgF30'/>
+                                                            <img v-if="q.gender=='Female' && q.age>30  && q.age<=50" :src='imgSrc.imgF50'/>
+                                                            <img v-if="q.gender=='Female' && q.age>50" :src='imgSrc.imgF60'/>
+                                                         </div>
+                                                        </a>
+                                                       <ul  v-if="q.name.length>0"> 
+                                                           <li v-for="r in getChain(q.degree,q.id)">
+                                                            <a href="javascript:void(0)" v-bind:title="r.name"> 
+                                                                <div>
+                                                                <img v-if="r.gender=='Male' && r.age<=14" :src='imgSrc.imgM14'/>
+                                                                <img v-if="r.gender=='Male' && r.age>14 && r.age<=30" :src='imgSrc.imgM30'/>
+                                                                <img v-if="r.gender=='Male' && r.age>30 " :src='imgSrc.imgM50'/>
+                                                                
+                                                                <img v-if="r.gender=='Female' && r.age<=14" :src='imgSrc.imgF14'/>
+                                                                <img v-if="r.gender=='Female' && r.age>14 && r.age<=30" :src='imgSrc.imgF30'/>
+                                                                <img v-if="r.gender=='Female' && r.age>30  && r.age<=50" :src='imgSrc.imgF50'/>
+                                                                <img v-if="r.gender=='Female' && r.age>50" :src='imgSrc.imgF60'/>
+                                                             </div>
+                                                            </a>
+                                                           </li>
+                                                       </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--sample tree-->
+                          </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            <!--#endregion Patient_Info_and_Chain-->
+            </div>
+        </div>
+     <!-- Vue Instance -->
+     <script src="scripts/script_tag.js" type="text/javascript"></script>
+    <script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            
+            lstChain:[],
+            imgSrc:{ //img+gender+max age
+               
+                imgF14:'images/Patients/F14.jpg',
+                imgF30:'images/Patients/F30.jpg',
+                imgF50:'images/Patients/F14.jpg',
+                imgF60:'images/Patients/F30.jpg',
+
+                imgM14:'images/Patients/M14.jpg',
+                imgM30:'images/Patients/M30.jpg',
+                imgM50:'images/Patients/M50.jpg',
+        },
+            stateName:'',
+            lstPatients:[],
+            demo_lstPatients:[
+            {
+                id:1, name:'Radha', age:10, gender:'Female',
+                symptoms:'Fever, Cough, Breathing difficulty', quarantinedSince:'01/01/2020',
+                state:'Telangana',district:'Hyderabad',taluka:'Hyderabad',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:2, name:'Ankit', age:10, gender:'Male',
+                symptoms:'Cough', quarantinedSince:'02/03/2020',
+                state:'Telangana',district:'Karimnagar', taluka:'Karimnagar',
+                category:'Contact',degree:2, taggedToPerson:1
+             },
+             {
+                id:3, name:'Vasu', age:20, gender:'Male',
+                symptoms:' Cough, Breathing difficulty', quarantinedSince:'03/02/2020',
+                state:'Telangana',district:'Ranga Reddy',taluka:'Ranga Reddy',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:4, name:'Rosy', age:20, gender:'Female',
+                symptoms:'pqr2@example.com', quarantinedSince:'03/15/2020',
+                state:'Telangana',district:'Medchal Malkajgiri',taluka:'Medchal Malkajgiri',
+                pinCode:'500032',category:'Contact',taggedToPerson:2,
+                degree:3 
+             },
+             {
+                id:5, name:'Kiran', age:30, gender:'Male',
+                symptoms:'xyz1@example.com', quarantinedSince:'02/04/2020',
+                state:'Telangana',district:'Bhadradri Kothagudem',taluka:'Kothagudem',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:6, name:'Sasi', age:30, gender:'Female',
+                symptoms:'def@example.com',quarantined:false, quarantinedSince:'',
+                state:'Telangana',district:'Nalgonda',taluka:'Nalgonda',
+                category:'Contact',degree:3 ,taggedToPerson:2
+             },
+             {
+                id:7, name:'Ria', age:40, gender:'Female',
+                symptoms:'Fever, Cough, Breathing difficulty',
+                quarantined:true, quarantinedSince:'01/01/2020', state:'Telangana',district:'Hyderabad',
+                taluka:'Hyderabad',pinCode:'500039',image:'/images/Patients/',
+                category:'Patient',degree:1,taggedToPerson:0
+             },
+             {
+                id:8, name:'John', age:40, gender:'Male',
+                symptoms:'Cough', quarantinedSince:'02/03/2020',
+                state:'Telangana',district:'Karimnagar',taluka:'Karimnagar', pinCode:'500032',
+                category:'Contact',degree:3 
+             },
+             {
+                id:9, name:'Mani', age:50, gender:'Male',
+                symptoms:'Fever', quarantinedSince:'03/02/2020',
+                state:'Telangana',district:'Ranga Reddy', taluka:'Ranga Reddy', pinCode:'500030',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:10, name:'Priya', age:50, gender:'Female',
+                symptoms:'Cough', quarantinedSince:'03/15/2020',
+                state:'Telangana',district:'Medchal Malkajgiri',taluka:'Medchal Malkajgiri',
+                pinCode:'500032',category:'Contact',
+                degree:2 
+             },
+             {
+                id:11, name:'Vikas', age:60, gender:'Male',
+                symptoms:'Fever', quarantinedSince:'02/04/2020',
+                state:'Telangana',district:'Bhadradri Kothagudem',taluka:'Kothagudem',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:12, name:'Varun', age:60, gender:'Male',
+                symptoms:'Breathing difficult', quarantinedSince:'',
+                state:'Telangana',district:'Nalgonda',taluka:'Nalgonda',
+                category:'Contact',degree:3 
+             },
+             {
+                id:13, name:'Kate', age:10, gender:'Female',
+                symptoms:'Fever, Cough, Breathing difficulty', quarantinedSince:'01/01/2020',
+                state:'Telangana',district:'Hyderabad',taluka:'Hyderabad',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:14, name:'Mike', age:10, gender:'Male',
+                symptoms:'Cough', quarantinedSince:'02/03/2020',
+                state:'Telangana',district:'Karimnagar', taluka:'Karimnagar',
+                category:'Contact',degree:4, taggedToPerson:0
+             },
+             {
+                id:15, name:'Abhi', age:20, gender:'Male',
+                symptoms:' Cough, Breathing difficulty', quarantinedSince:'03/02/2020',
+                state:'Telangana',district:'Ranga Reddy',taluka:'Ranga Reddy',
+                category:'Patient',degree:1 ,taggedToPerson:0
+             },
+             {
+                id:16, name:'Mia', age:20, gender:'Female',
+                symptoms:'Cough, Breathing difficult', quarantinedSince:'03/15/2020',
+                state:'Telangana',district:'Medchal Malkajgiri',taluka:'Medchal Malkajgiri',
+                pinCode:'500032',category:'Contact'
+                ,degree:2, taggedToPerson:1 
+             },
+             {
+                id:17, name:'Eric', age:30, gender:'Male',
+                symptoms:'Cough', quarantinedSince:'02/04/2020',
+                state:'Telangana',district:'Bhadradri Kothagudem',taluka:'Kothagudem',
+                category:'Contact',degree:3,taggedToPerson:16
+             }
+            ],
+            patientInfo:{
+                id:0,
+                name:0,
+                age:0,
+                gender:'',//Male/Female
+                symptoms:'',
+                quarantinedSince:'',//01/01/2020
+                state:'',
+                district:'',
+                taluka:'',
+                category:'',//patient or contact
+                degree:0 
+            },
+            patientChain:[
+                {id:0, name:'',degree:0},
+                {id:0, name:'',degree:0},
+                {id:0, name:'',degree:0}
+            ]
+        },  
+        methods:{
+            getChain(degree,id){
+                var self=this;
+                var array=$.grep(self.lstPatients,function(obj){return obj.taggedToPerson==id && obj.degree==degree+1});
+                
+                return array;
+               
+            },
+            viewPatientDetails(patientId){
+                var self=this;
+                self.patientInfo=$.grep(self.lstPatients,function(obj){return obj.id==patientId})[0];
+                self.lstChain.push(self.patientInfo);
+                console.log(self.lstChain);
+                $('#patientModal').modal('show'); 
+                //self.getChain(self.patientInfo);
+                //var obj=$.grep($.grep(self.lstPatients,function(obj){return obj.id==patientId}))
+
+            },
+            tagYourself(patientId){
+                window.location.href='tag_yourself.html?id='+patientId;
+            },
+            getPatientDetails(state){
+                    var self=this;
+                    self.lstPatients=self.demo_lstPatients;//<TODO>need to replace this with api
+                    console.log(self.lstPatients);
+            },
+            getCookie() {
+                var self=this;
+                var nameValueArray=document.cookie.split('=');
+                if(nameValueArray[0]!="")
+                {var taggedPatientObj=JSON.parse(nameValueArray[1]);
+                const max = self.lstPatients.reduce(function(prev, current) {
+                    return (prev.id > current.id) ? prev : current
+                }) 
+                console.log(max.id);
+                console.log(taggedPatientObj);
+                var tagToPatient=$.grep(self.lstPatients,function(p){return p.id==taggedPatientObj.personInfo.tagToPatientId})[0];
+               
+                console.log(tagToPatient);
+                if(taggedPatientObj.personInfo != undefined){
+                    var obj=new Object();
+                    var current_datetime = new Date(taggedPatientObj.personInfo.quarantinedSince);
+
+                    obj.id=max.id+1;
+                    obj.name=taggedPatientObj.personInfo.name;
+                    obj.age=taggedPatientObj.personInfo.age;
+                    obj.gender=taggedPatientObj.personInfo.gender;
+                    obj.symptoms=taggedPatientObj.personInfo.symptoms.join();
+                    obj.quarantinedSince=current_datetime.getDate() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getFullYear()
+                    obj.state='Telangana';
+                    obj.district='Hyderabad';
+                    obj.taluka='Hyderabad';
+                    obj.category='Contact';
+                    obj.degree=tagToPatient.degree+1;
+                    obj.taggedToPerson=tagToPatient.id;
+                    self.lstPatients.push(obj);
+                    console.log(self.lstPatients);
+
+                    document.cookie = "tagPerson= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+                }
+            }
+            }
+        },
+        mounted:function(){
+            var self=this;
+            var getAllParameterKeyValuePairs = window.location.search.substring(1);
+            var getStateParameter = getAllParameterKeyValuePairs.split('&')[0];
+            if(getStateParameter.split('=')[0]=='state')
+            {
+                self.stateName= getStateParameter.split('=')[1].split("#")[0];
+            }
+            else
+            {
+                self.stateName=null;
+            }
+            console.log(self.stateName);
+            
+            console.log(submitPersonDetails);
+           
+            self.getPatientDetails(self.stateName);
+            self.getCookie();
+        }  
+    })
+    </script>
+    </body>
+</html>

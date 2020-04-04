@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Corona Sampark - Tag Yourself</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="sty   lesheet" />
+            
+        <link href="style.css" rel="stylesheet" />     
+    </head>
+    <body>
+     <div id="app">
+        <div class="bs-example">
+             <!--#region  navbar-->
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                    <a href="#" class="navbar-brand">
+                        <img src="images/corona.jpg" height="30" alt="Logo" class="img img-circle">
+                        <a href="javascript:void(0)" class="navbar-brand">Corona Sampark</a>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav">
+                          <a href="index.html" class="nav-item nav-link">Home</a>
+                          <a href="https://covid.apollo247.com/?utm_source=linkedin&utm_medium=organic&utm_campaign=bot_scanner" class="nav-item nav-link">Self Test</a> 
+                          <a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf" class="nav-item nav-link">Emergency Helpline Numbers</a>
+                          <a href="#" class="nav-item nav-link">Shops Near Me</a> 
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <a href="#" class="nav-item nav-link">Login</a>
+                            <a href="#" class="nav-item nav-link">Register</a>
+                        </div>
+                    </div>
+                </nav>
+            <!--#endregion navbar-->
+        <br/>
+        
+        <!--#region Form_Tag_Yourself-->
+        <div class="container-fluid" >
+            <div class="">
+               
+                <div class="alert alert-warning" role="alert">
+                    Phone Number and Email address will be confidential and not displayed on the site for others to view.
+                  </div>
+
+                <div class="row">
+                    <div class="card bg-light col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="card-header"><b>Fill this form to tag yourself:</b></div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label for="inputName4"><b>Name</b></label>
+                                    <input type="text" class="form-control input-sm" id="inputName4" placeholder="Name" v-model="tagPersonDetails.name">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="inputAge4"><b>Age</b></label>
+                                    <input type="number" class="form-control input-sm" id="inputAge4" placeholder="Age" min="0" max="150" v-model="tagPersonDetails.age">
+                                  </div>
+                                  <div class="form-group col-12">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" v-model="tagPersonDetails.gender">
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" v-model="tagPersonDetails.gender">
+                                        <label class="form-check-label" for="female">Female</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="inputPhone4"><b>Phone</b></label>
+                                        <input type="number" class="form-control" id="inputPhone4" placeholder="" v-model="tagPersonDetails.phone">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="inputEmail4"><b>Email</b></label>
+                                        <input type="text" class="form-control" id="inputEmail4" placeholder="email@example.com" v-model="tagPersonDetails.email">
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Photo</span>
+                                    </div>
+                                    <div class="custom-file">
+                                      <input type="file" class="custom-file-input" id="inputPhoto">
+                                      <label class="custom-file-label" for="inputPhoto">Choose file</label>
+                                    </div>
+                                  </div>
+                                <div class="form-row">
+                                  <div class="form-group col-md-12">
+                                    <label for="inputSymptoms4"><b>Symptoms</b></label>
+                                    <!-- <textarea class="form-control" id="inputSymptoms4" rows="3"></textarea> -->
+                                   
+                                   <div class="col-sm-offset-2 col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                      <div class="checkbox">
+                                        <label><input type="checkbox" value="Fever" v-model="tagPersonDetails.symptoms">Fever</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <label><input type="checkbox" value="Cold" v-model="tagPersonDetails.symptoms">Cold</label>
+                                      </div>
+                                      <div class="checkbox disabled">
+                                        <label><input type="checkbox" value="Breathing difficulty" v-model="tagPersonDetails.symptoms">Breathing difficulty</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="inputQuarantine4">Quarantined since</label>
+                                    <input type="date" class="form-control" id="inputQuarantine4" v-model="tagPersonDetails.quarantinedSince">
+                                  </div>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                            </form>
+                        </div>
+                      </div>
+                    <div class="card bg-light col-lg-6 col-md-6 col-sm-12 col-xs-12" style="overflow-y:scroll">
+                        <div class="card-header"><b>Fill out all the addresses which you have visited in last 14 days:</b></div>
+                        <div class="card-body">
+                        <form>
+                            <table class="table table-hover table-bordered table-striped">
+                                <thead class="bg-info">
+                                  <tr>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">State</th>
+                                    <th scope="col">District</th>
+                                    <th scope="col">Taluka</th>
+                                    <th scope="col">Pin Code</th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="n in countRows">
+                                    <th>
+                                        <input type="text" class="form-control"  v-model="lstTravelHistory[n-1].country">
+                                    </th>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="lstTravelHistory[n-1].state" >
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="lstTravelHistory[n-1].district"> 
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="lstTravelHistory[n-1].taluka">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="lstTravelHistory[n-1].pinCode">
+                                    </td>
+                                    <td class="text-center">
+                                      <a href="javascript:void(0);">
+                                          <b v-on:click="addTravelHistory()" v-show="n==countRows"> &plus;</b>
+                                        </a>
+                                        <a href="javascript:void(0);">
+                                            <b v-on:click="removeTravelHistory(n-1)" v-show="countRows!=1 && n<=countRows"> &minus;</b>
+                                          </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" v-model="tagPersonDetails.agreeToShowDetails">
+                      By checking this, I am giving my consent to use my personal data including photo, <a href="javascript:void(0)" v-on:click="openTermsAndCondition()">click here for more details </a>
+                      <!-- I agree to the <a href="javascript:void(0)" v-on:click="openTermsAndCondition()">terms and conditions</a>.</label> -->
+                </div>
+                <button class="btn btn-info btn-sm" v-on:click="SubmitTagPerson()" v-bind:disabled="!this.enableSubmit">Submit to Tag yourself</button>
+               
+            </div>
+        </div>
+        <!--#endregion Form_Tag_Yourself-->
+    
+    
+      </div>
+      <!--Thank you Model Popup starts-->
+        <div class="container">
+          <div class="row">
+              <div class="modal fade" id="ignismyModal" role="dialog"  data-backdrop="static" data-keyboard="false">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                            <!-- data-dismiss="modal" -->
+                              <button type="button" class="close" aria-label="" v-on:click="goToViewPatients()"><span>×</span></button>
+                          </div>
+                
+                          <div class="modal-body">
+                            
+                  <div class="thank-you-pop">
+                    <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">
+                   
+                    <p>
+                      Thank you for volunteering for this social cause.
+                      Your photos and name will enable us to track other people and help control the spread of this virus!
+                    </p>
+                    
+                    <!-- <h3 class="cupon-pop">Your Id: <span>12345</span></h3> -->
+                    
+                  </div>
+                              
+                          </div>
+                
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      <!--Thank you Model Popup ends-->
+       <!--Terms and Conditions Model Popup starts-->
+       <div class="container">
+        <div class="row">
+            <div class="modal fade" id="temsModal" role="dialog"  data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- data-dismiss="modal" -->
+                          <b>Data Privacy:</b>
+                            <button type="button" class="close" aria-label="" data-dismiss="modal"><span>×</span></button>
+                        </div>
+              
+                        <div class="modal-body">
+                      
+                  <p>
+                  Email and Phone number being collected are for tracking purpose and will not be displayed on the website but it may be useful for government to reach out to people who you may have come in contact and send you details about self isolating and providing all help needed.
+                 
+                </p>
+                 <p>Photos will be used to display on the site along with first name and this is totally voluntary. But we encourage you to include your photos so that other people can make correct tag and help minimize the track. 
+                </p>
+                <p>
+                 
+                 We assure you that your data will be safe and shared with only Government department for appropriate use to curb Coronavirus spread
+                </p>
+               
+                            
+                        </div>
+              
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!--Terms and Conditions  Model Popup ends-->
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+              //enableSubmit:false,
+                invalidPatient:false,
+                patientId:0,
+                countRows:1,
+                lstTravelHistory:[
+                    {
+                    country:'',
+                    state:'',
+                    district:'',
+                    taluka:'',
+                    pinCode:''
+                    }],
+                travelHistory:{
+                    country:'',
+                    state:'',
+                    district:'',
+                    taluka:'',
+                    pinCode:''
+                    },
+                tagPersonDetails:{
+                    tagToPatientId:0,
+                    name:'',
+                    age:0,
+                    gender:'',
+                    phone:'',
+                    email:'',
+                    symptoms:[],
+                    quarantinedSince:'',
+                    agreeToShowDetails:false
+                },
+                submitPersonDetails:{
+                    personInfo:{},
+                    travelInfo:[]
+                }
+            },
+            methods:{
+                openTermsAndCondition(){
+                  $('#temsModal').modal('show');
+                },
+                goToViewPatients(){
+                  var state='telangana';
+                  window.location.href='view_patients.html?state='+state.toLowerCase();
+                },
+                addTravelHistory(){
+                    var self=this;
+                    self.countRows++;
+                    self.lstTravelHistory.push(self.travelHistory)
+                    console.log(self.tagPersonDetails);
+                    console.log(self.lstTravelHistory);
+                },
+                removeTravelHistory(index){
+                    var self=this;
+                    self.countRows--;
+                    self.lstTravelHistory.splice(index,1);
+                    console.log(self.lstTravelHistory);
+                },
+                SubmitTagPerson(){
+                  var self=this;
+                  self.submitPersonDetails.personInfo=self.tagPersonDetails;
+                  self.submitPersonDetails.travelInfo= self.lstTravelHistory;
+                  console.log(self.submitPersonDetails);
+                  
+                  var myObjectString = JSON.stringify(self.submitPersonDetails);
+                
+                  document.cookie = "tagPerson="+ myObjectString ;
+                  $('#ignismyModal').modal('show');
+                }
+                 
+            },
+            mounted:function(){
+                var self=this;
+                
+                var getAllParameterKeyValuePairs = window.location.search.substring(1);
+                var getIdParameter = getAllParameterKeyValuePairs.split('&')[0];
+                if(getIdParameter.split('=')[0]=='id')
+                {
+                    self.patientId= getIdParameter.split('=')[1];
+                }
+                else
+                {
+                    self.patientId=0;                    
+                }
+                if(self.patientId<=0)
+                self.invalidPatient=true;
+                self.tagPersonDetails.tagToPatientId=self.patientId;
+
+                console.log(self.lstTravelHistory);
+                console.log(self.tagPersonDetails);
+            } ,
+            computed: {
+              enableSubmit: function () {
+                var self=this;
+                debugger;
+                  if(self.tagPersonDetails.name.trim().length>0 &&
+                  self.tagPersonDetails.age>0  && self.tagPersonDetails.gender.trim().length>0 && 
+                  self.tagPersonDetails.symptoms.length>0 &&
+                  self.tagPersonDetails.phone.trim().length>0
+                  && self.tagPersonDetails.email.trim().length>0
+                  && self.tagPersonDetails.agreeToShowDetails == true
+                  )
+                    {
+                      return true;
+                    }
+                    return false;
+                },
+                
+              }
+        });
+    </script>
+    </body>
+</html>
