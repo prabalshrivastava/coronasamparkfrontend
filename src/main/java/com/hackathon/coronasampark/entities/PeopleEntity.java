@@ -53,18 +53,6 @@ public class PeopleEntity extends AuditModel{
     @Column(nullable = true, length = 500)
     private String otherLink;
 
-    @ApiModelProperty(required = true, example = "cloumn1")
-    @Column(nullable = false, length = 250)
-    private String cloumn1;
-
-    @ApiModelProperty(required = true, example = "cloumn2")
-    @Column(nullable = false, length = 250)
-    private String cloumn2;
-
-    @ApiModelProperty(required = true, example = "cloumn3")
-    @Column(nullable = false, length = 250)
-    private String cloumn3;
-
     @ApiModelProperty(required = true, example = "location")
     @Column(nullable = false, length = 250)
     private String location;

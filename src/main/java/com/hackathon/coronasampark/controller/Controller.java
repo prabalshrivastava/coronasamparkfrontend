@@ -1,5 +1,6 @@
 package com.hackathon.coronasampark.controller;
 
+import com.hackathon.coronasampark.utill.GoogleContactsUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -15,11 +16,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.inject.Inject;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 
 @RestController
 public class Controller {
+
+    @Inject
+    GoogleContactsUtil googleContactsUtil;
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
@@ -61,8 +67,9 @@ public class Controller {
 //    }
 
     @GetMapping("/profile")
-    public String profile(Principal principal) {
+    public String profile(Principal principal) throws IOException {
         String name = principal.getName();
+        googleContactsUtil.setUp();
         return "if you see this you are logged in";
     }
 }

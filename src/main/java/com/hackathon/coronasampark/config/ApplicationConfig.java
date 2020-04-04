@@ -22,6 +22,10 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter implements W
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+//        configureUrlRestrictions(http);
+    }
+
+    private void configureUrlRestrictions(HttpSecurity http) throws Exception {
         http.antMatcher("/**").authorizeRequests()
             .antMatchers(new String[]{"/", "/not-restricted"}).permitAll()
             .anyRequest().authenticated()
