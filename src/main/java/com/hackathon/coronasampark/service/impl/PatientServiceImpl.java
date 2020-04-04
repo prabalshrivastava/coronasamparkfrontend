@@ -51,8 +51,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public ResponseEntity<?> getSinglePatient(Integer uuid) {
-        return new ResponseEntity<>(patientRepository.findById(uuid), HttpStatus.OK);
+    public ResponseEntity<?> getSinglePatient(Integer id) {
+        return new ResponseEntity<>(patientRepository.findById(id), HttpStatus.OK);
     }
 
     @Override

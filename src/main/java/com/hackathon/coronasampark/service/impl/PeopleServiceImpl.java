@@ -22,8 +22,8 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public ResponseEntity<?> getSinglePeople(Integer uuid) {
-        return new ResponseEntity<>(peopleRepository.findById(uuid),HttpStatus.OK);
+    public ResponseEntity<?> getSinglePeople(Integer id) {
+        return new ResponseEntity<>(peopleRepository.findById(id),HttpStatus.OK);
     }
 
     @Override

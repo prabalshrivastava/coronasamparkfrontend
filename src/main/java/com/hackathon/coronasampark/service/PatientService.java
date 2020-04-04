@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 public interface PatientService {
     ResponseEntity<?> getAllPatients(AddressRequest addressRequest);
 
-    ResponseEntity<?> getSinglePatient(Integer uuid);
+    ResponseEntity<?> getSinglePatient(Integer id);
 
     ResponseEntity<?> savePatientInfo(PatientInfoEntity patientInfoEntity);
 }

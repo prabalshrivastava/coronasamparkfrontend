@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public interface PeopleService {
     ResponseEntity<?> getAllPeoples();
 
-    ResponseEntity<?> getSinglePeople(Integer uuid);
+    ResponseEntity<?> getSinglePeople(Integer id);
 
     ResponseEntity<?> savePeople(PeopleEntity peopleEntity);
 }

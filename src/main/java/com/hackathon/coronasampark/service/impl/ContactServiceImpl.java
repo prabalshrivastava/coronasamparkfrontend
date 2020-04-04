@@ -22,8 +22,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ResponseEntity<?> getSingleContact(Integer uuid) {
-        return new ResponseEntity<>(contactRepository.findById(uuid),HttpStatus.OK);
+    public ResponseEntity<?> getSingleContact(Integer id) {
+        return new ResponseEntity<>(contactRepository.findById(id),HttpStatus.OK);
     }
 
     @Override

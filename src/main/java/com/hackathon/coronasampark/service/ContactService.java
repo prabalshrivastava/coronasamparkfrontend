@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public interface ContactService {
     ResponseEntity<?> getAllContacts();
 
-    ResponseEntity<?> getSingleContact(Integer uuid);
+    ResponseEntity<?> getSingleContact(Integer id);
 
     ResponseEntity<?> saveContact(ContactEntity peopleEntity);
 }

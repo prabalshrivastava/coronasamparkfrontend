@@ -5,11 +5,13 @@ import com.hackathon.coronasampark.repositories.AddressRepository;
 import com.hackathon.coronasampark.repositories.StateRepository;
 import com.hackathon.coronasampark.service.AddressService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,8 +28,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> getSingleAddress(Integer uuid) {
-        return new ResponseEntity<>(addressRepository.findById(uuid), HttpStatus.OK);
+    public ResponseEntity<?> getSingleAddress(Integer id) {
+        return new ResponseEntity<>(addressRepository.findById(id), HttpStatus.OK);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> getCountryByState(String state) {
+    public ResponseEntity<?> getCountryByState(String state, Integer stateId) {
         return new ResponseEntity<>(addressRepository.getByState(state), HttpStatus.OK);
     }
 
@@ -86,8 +88,25 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> getCityByState(String state) {
+    public ResponseEntity<?> getCityByState(String state, Integer stateId) {
         return new ResponseEntity<>(addressRepository.getByState(state), HttpStatus.OK);
+    }
+
+    @Override
+    public Object getGeoByStateOrDistrictOrTaluka(Integer state, Integer districtId, Integer talukaId, Boolean extent) {
+        if (extent)
+            return stateRepository.getGeoByStateAndDistrictAndTaluka(state, districtId, talukaId);
+        else
+            return stateRepository.getGeoByStateAndDistrictAndTalukaExtent(state, districtId, talukaId);
+    }
+
+    @Override
+    public Object getGeoByStateOrDistrict(Integer state, Integer districtId,Boolean extent) {
+        if (extent)
+            return stateRepository.getGeoByStateAndDistrict(state, districtId);
+        else
+            return stateRepository.getGeoByStateAndDistrictExtent(state, districtId);
+
     }
 
     @Override
@@ -96,7 +115,6 @@ public class AddressServiceImpl implements AddressService {
             return stateRepository.getGeoByState(state);
         else
             return stateRepository.getGeoByStateExtent(state);
-
     }
 
     @Override
