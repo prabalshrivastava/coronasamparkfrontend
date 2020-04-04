@@ -13,6 +13,6 @@ public interface StateRepository extends CrudRepository<StateEntity, Integer> {
     @Query(nativeQuery = true,value = "select ST_AsGeoJSON(t.geom) from corona_sampark.ind_adm1 t where id_1=:state")
     String getGeoByState(@Param("state") Integer state);
 
-    @Query(nativeQuery = true,value = "select ST_Extent(t.geom) as extent from corona_sampark.ind_adm1 t where id_1=:state")
+    @Query(nativeQuery = true,value = "select Cast(ST_Extent(t.geom) as varchar) as extent from corona_sampark.ind_adm1 t where id_1=:state")
     Object getGeoByStateExtent(@Param("state") Integer state);
 }
