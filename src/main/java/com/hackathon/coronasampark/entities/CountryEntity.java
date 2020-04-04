@@ -302,4 +302,7 @@ public class CountryEntity {
     @Column(name = "shape_area", nullable = true, precision = 0)
     private BigInteger shapeArea;
 
+    @ApiModelProperty(required = true, example = "geom")
+    @Column(name = "geom", nullable = true, precision = 0)
+    private Object geom;
 }
